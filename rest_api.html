@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Al-Quran Indonesia API</title>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+	<h1>Daftar Surah Al-Quran</h1>
+	<table id="surahTable">
+		<thead>
+			<tr>
+				<th>No</th>
+				<th>Nama Surah</th>
+				<th>Jumlah Ayat</th>
+			</tr>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+
+	<script>
+		$(document).ready(function() {
+			// URL API
+			var url = 'https://al-quran-8d642.firebaseio.com/data.json';
+
+			// Memuat data dari API menggunakan AJAX
+			$.ajax({
+				url: url,
+				type: 'GET',
+				dataType: 'json',
+				success: function(result) {
+					// Memasukkan data ke dalam tabel HTML
+					var table = $('#surahTable tbody');
+					$.each(result, function(i, surah) {
+						var row = '<tr>' +
+							'<td>' + surah.nomor + '</td>' +
+							'<td>' + surah.nama + '</td>' +
+							'<td>' + surah.jumlah_ayat + '</td>' +
+							'</tr>';
+						table.append(row);
+					});
+				},
+				error: function(error) {
+					console.log(error);
+				}
+			});
+		});
+	</script>
+</body>
+</html>
